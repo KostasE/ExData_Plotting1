@@ -1,0 +1,8 @@
+data <- read.table("household_power_consumption.txt", sep = ";", na.strings = "?", skip = 66637 , nrows = 2881)
+head <- read.table("household_power_consumption.txt", sep = ";", na.strings = "?", nrows = 1)
+ndate <- strptime(paste(data[,1], data[,2]), "%d/%m/%Y %H:%M:%S", tz="UTC")
+ndata <- cbind(ndate, data[,3:9])
+colnames(ndata)<-c("Date/Time", sapply(head[,3:9], toString))
+plot1 <- hist(ndata[,2], col = "Red", xlab = "Global Active Power(kilowatts)", main = "Global Active Power")
+dev.copy(png, file = "plot1.png")
+dev.off()
